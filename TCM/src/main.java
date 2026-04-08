@@ -1,17 +1,18 @@
-import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class main {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        LinkedHashSet<String> formation = new LinkedHashSet<>();
+        HashMap<String, Integer> capacityMap = new HashMap<>();
 
-        formation.add("Engine");
-        formation.add("Sleeper");
-        formation.add("Cargo");
-        formation.add("Guard");
-        formation.add("Sleeper");
+        capacityMap.put("Sleeper", 72);
+        capacityMap.put("AC Chair", 78);
+        capacityMap.put("First Class", 24);
 
-        System.out.println("Train formation: " + formation);
+        for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
     }
 }
