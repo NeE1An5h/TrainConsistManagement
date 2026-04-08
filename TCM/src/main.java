@@ -1,22 +1,18 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class main{
+public class main {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        List<String> consist = new ArrayList<>();
+        Set<String> bogieIds = new HashSet<>();
 
-        consist.add("Sleeper");
-        consist.add("AC Chair");
-        consist.add("First Class");
+        bogieIds.add("B1");
+        bogieIds.add("B2");
+        bogieIds.add("B3");
+        bogieIds.add("B2");
+        bogieIds.add("B1");
 
-        System.out.println("Bogies after addition: " + consist);
-
-        consist.remove("AC Chair");
-
-        System.out.println("Is Sleeper present: " + consist.contains("Sleeper"));
-
-        System.out.println("Final bogie list: " + consist);
+        System.out.println("Unique bogie IDs: " + bogieIds);
     }
 }
