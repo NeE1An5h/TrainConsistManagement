@@ -2,31 +2,25 @@ import java.util.*;
 
 public class main {
     public static void main(String[] args) {
-        System.out.println("=== Binary Search for Bogie ID ===");
+        System.out.println("=== Safe Search Operation ===");
 
-        String[] bogieIds = {"TRN101", "TRN205", "TRN309", "TRN412", "TRN550"};
+        List<String> bogieIds = new ArrayList<>();
 
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter Bogie ID to search: ");
         String key = sc.nextLine();
 
-        int low = 0;
-        int high = bogieIds.length - 1;
+        if (bogieIds.isEmpty()) {
+            throw new IllegalStateException("No bogies available in the train. Search cannot be performed.");
+        }
+
         boolean found = false;
 
-        while (low <= high) {
-            int mid = (low + high) / 2;
-
-            int result = bogieIds[mid].compareTo(key);
-
-            if (result == 0) {
+        for (String id : bogieIds) {
+            if (id.equals(key)) {
                 found = true;
                 break;
-            } else if (result < 0) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
             }
         }
 
