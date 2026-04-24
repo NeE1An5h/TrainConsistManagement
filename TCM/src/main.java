@@ -1,14 +1,19 @@
-Here’s the Java code matching your existing structure and style (same pattern you’ve been using in IntelliJ IDEA), implementing UC13 with both loop and stream timing — no comments:
-
-        ```java
 import java.util.*;
-import java.util.stream.*;
+
+class InvalidCapacityException extends Exception {
+    InvalidCapacityException(String message) {
+        super(message);
+    }
+}
 
 class Bogie {
     String type;
     int capacity;
 
-    Bogie(String type, int capacity) {
+    Bogie(String type, int capacity) throws InvalidCapacityException {
+        if (type.equalsIgnoreCase("Passenger") && capacity <= 0) {
+            throw new InvalidCapacityException("Invalid capacity for passenger bogie");
+        }
         this.type = type;
         this.capacity = capacity;
     }
@@ -16,38 +21,17 @@ class Bogie {
 
 public class main {
     public static void main(String[] args) {
-        System.out.println("=== Performance Comparison ===");
+        System.out.println("=== Bogie Creation with Validation ===");
 
         List<Bogie> bogies = new ArrayList<>();
 
-        for (int i = 0; i < 100000; i++) {
-            bogies.add(new Bogie(i % 2 == 0 ? "Passenger" : "Goods", i));
+        try {
+            bogies.add(new Bogie("Passenger", 72));
+            bogies.add(new Bogie("Passenger", 0));
+        } catch (InvalidCapacityException e) {
+            System.out.println(e.getMessage());
         }
 
-        long startLoop = System.nanoTime();
-
-        List<Bogie> loopResult = new ArrayList<>();
-        for (Bogie b : bogies) {
-            if (b.type.equals("Passenger")) {
-                loopResult.add(b);
-            }
-        }
-
-        long endLoop = System.nanoTime();
-
-        long startStream = System.nanoTime();
-
-        List<Bogie> streamResult = bogies.stream()
-                .filter(b -> b.type.equals("Passenger"))
-                .collect(Collectors.toList());
-
-        long endStream = System.nanoTime();
-
-        long loopTime = endLoop - startLoop;
-        long streamTime = endStream - startStream;
-
-        System.out.println("Loop Time (ns): " + loopTime);
-        System.out.println("Stream Time (ns): " + streamTime);
+        System.out.println("Total bogies added: " + bogies.size());
     }
 }
-```
