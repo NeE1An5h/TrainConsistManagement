@@ -1,37 +1,51 @@
 import java.util.*;
 
-class InvalidCapacityException extends Exception {
-    InvalidCapacityException(String message) {
+class CargoSafetyException extends RuntimeException {
+    CargoSafetyException(String message) {
         super(message);
     }
 }
 
 class Bogie {
-    String type;
-    int capacity;
+    String shape;
+    String cargo;
 
-    Bogie(String type, int capacity) throws InvalidCapacityException {
-        if (type.equalsIgnoreCase("Passenger") && capacity <= 0) {
-            throw new InvalidCapacityException("Invalid capacity for passenger bogie");
+    Bogie(String shape) {
+        this.shape = shape;
+    }
+
+    void assignCargo(String cargo) {
+        if (shape.equalsIgnoreCase("Rectangular") && cargo.equalsIgnoreCase("Petroleum")) {
+            throw new CargoSafetyException("Unsafe cargo assignment");
         }
-        this.type = type;
-        this.capacity = capacity;
+        this.cargo = cargo;
     }
 }
 
 public class main {
     public static void main(String[] args) {
-        System.out.println("=== Bogie Creation with Validation ===");
+        System.out.println("=== Cargo Assignment Safety Check ===");
 
         List<Bogie> bogies = new ArrayList<>();
 
-        try {
-            bogies.add(new Bogie("Passenger", 72));
-            bogies.add(new Bogie("Passenger", 0));
-        } catch (InvalidCapacityException e) {
-            System.out.println(e.getMessage());
+        bogies.add(new Bogie("Cylindrical"));
+        bogies.add(new Bogie("Rectangular"));
+
+        for (Bogie b : bogies) {
+            try {
+                if (b.shape.equalsIgnoreCase("Cylindrical")) {
+                    b.assignCargo("Petroleum");
+                } else {
+                    b.assignCargo("Petroleum");
+                }
+                System.out.println("Cargo assigned to " + b.shape + " bogie");
+            } catch (CargoSafetyException e) {
+                System.out.println("Error: " + e.getMessage());
+            } finally {
+                System.out.println("Attempt completed for " + b.shape + " bogie");
+            }
         }
 
-        System.out.println("Total bogies added: " + bogies.size());
+        System.out.println("Program continues...");
     }
 }
